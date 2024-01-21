@@ -3,15 +3,16 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import { Outlet } from "react-router-dom";
+import MainNavBar from "../components/MainNavBar";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}.
+      {new Date().getFullYear()}{" "}
+      <Link color="inherit" href="https://github.com/isotronic">
+        Joseph Bouqdib
+      </Link>
     </Typography>
   );
 }
@@ -19,15 +20,13 @@ function Copyright() {
 export default function Root() {
   return (
     <>
+      <MainNavBar />
+      <Outlet />
       <Container maxWidth="sm">
         <Box sx={{ my: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Food Finder App
-          </Typography>
           <Copyright />
         </Box>
       </Container>
-      <Outlet />
     </>
   );
 }
