@@ -12,8 +12,16 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { CssBaseline } from "@mui/material";
+import Search from "./routes/Search";
 
-const router = createBrowserRouter([{ path: "/", element: <Root />, errorElement: <ErrorPage /> }]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [{ index: true, element: <Search /> }],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
