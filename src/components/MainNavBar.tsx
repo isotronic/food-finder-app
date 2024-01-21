@@ -1,4 +1,5 @@
 import * as React from "react";
+import { NavLink } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,7 +16,7 @@ export default function MainNavBar() {
   const [auth, setAuth] = React.useState(false);
   const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(null);
 
-  function handleOpenMenu(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleOpenMenu(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorElement(event.currentTarget);
   }
 
@@ -31,7 +32,12 @@ export default function MainNavBar() {
       <AppBar position="static">
         <Toolbar>
           <RestaurantIcon sx={{ display: "flex", mr: 1 }} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component={NavLink}
+            to="/"
+            sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
+          >
             Food Finder
           </Typography>
           {(auth && (
