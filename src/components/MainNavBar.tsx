@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import * as React from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -6,8 +6,26 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+import IconButton from "@mui/material/IconButton";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 
 export default function MainNavBar() {
+  const [auth, setAuth] = React.useState(false);
+  const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(null);
+
+  function handleOpenMenu(event: React.ChangeEvent<HTMLInputElement>) {
+    setAnchorElement(event.currentTarget);
+  }
+
+  function handleCloseMenu() {
+    setAnchorElement(null);
+  }
+
+  function handleAuth() {
+    setAuth((prevState) => !prevState);
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -16,7 +34,43 @@ export default function MainNavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Food Finder
           </Typography>
-          <Button color="inherit">Login</Button>
+          {(auth && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElement}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElement)}
+                onClose={handleCloseMenu}
+              >
+                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+                {/* <MenuItem onClick={handleAuth}>Logout</MenuItem> */}
+              </Menu>
+            </div>
+          )) || (
+            <Button color="inherit" onClick={handleAuth}>
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
