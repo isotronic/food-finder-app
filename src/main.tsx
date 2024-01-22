@@ -2,7 +2,9 @@ import * as React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
+import { CssBaseline } from "@mui/material";
 import Root from "./routes/Root";
+import Search from "./routes/Search";
 import ErrorPage from "./ErrorPage";
 import theme from "./theme";
 
@@ -11,8 +13,6 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { CssBaseline } from "@mui/material";
-import Search from "./routes/Search";
 
 const router = createBrowserRouter([
   {
