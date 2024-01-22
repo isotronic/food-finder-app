@@ -20,12 +20,10 @@ export default function Search() {
   }
 
   function geoLocationFinderHandler() {
-    const userLocation = geoLocationFinder();
-    setGeoLocation(userLocation);
+    setGeoLocation(geoLocationFinder());
   }
 
   function searchRequestHandler() {
-    console.log(geoLocation);
     sendSearchRequest(searchQuery, geoLocation);
   }
   return (
@@ -43,7 +41,7 @@ export default function Search() {
         />
         <Box display="flex" justifyContent="flex-end">
           <Button
-            disabled={JSON.stringify(geoLocation) !== JSON.stringify({ latitude: 0, longitude: 0 })}
+            // disabled={JSON.stringify(geoLocation) !== JSON.stringify({ latitude: 0, longitude: 0 })}
             onClick={geoLocationFinderHandler}
             variant="outlined"
             sx={{ mx: 1 }}

@@ -3,6 +3,8 @@ export type GeoLocation = {
   longitude: number;
 };
 
-// export type GeoLocationData = {
-//   geoLocation: GeoLocation;
-// };
+export type SearchOptions = {
+  textQuery: string;
+  maxResultCount: number;
+  locationBias?: object;
+};
