@@ -8,9 +8,13 @@ import { geoLocationFinder } from "../utils/user-location";
 import React, { useState } from "react";
 import { GeoLocation } from "../utils/types";
 import { sendSearchRequest } from "../utils/http";
+import GoogleMapDisplay from "../components/Map";
 
 export default function Search() {
-  const [geoLocation, setGeoLocation] = useState<GeoLocation>({ latitude: 0, longitude: 0 });
+  const [geoLocation, setGeoLocation] = useState<GeoLocation>({
+    latitude: 51.5072,
+    longitude: -0.13,
+  });
   const [searchQuery, setSearchQuery] = useState("");
 
   function changeSearchQueryHandler(
@@ -20,14 +24,16 @@ export default function Search() {
   }
 
   function geoLocationFinderHandler() {
-    setGeoLocation(geoLocationFinder());
+    const userLocation = geoLocationFinder();
+    console.log(userLocation);
+    setGeoLocation(userLocation);
   }
 
   function searchRequestHandler() {
     sendSearchRequest(searchQuery, geoLocation);
   }
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
         <Typography variant="h5" align="center" sx={{ my: 2 }}>
           What are you craving today?
@@ -53,6 +59,7 @@ export default function Search() {
           </Button>
         </Box>
       </Box>
+      <GoogleMapDisplay latitude={geoLocation.latitude} longitude={geoLocation.longitude} />
     </Container>
   );
 }
