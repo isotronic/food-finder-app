@@ -1,5 +1,5 @@
 import { GeoLocation } from "./types";
-import { errorHandler, getErrorMessage } from "../utils/error-handler";
+import { getErrorMessage } from "../utils/error-handler";
 
 export function geoLocationFinder() {
   const geoLocation: GeoLocation = { latitude: 0, longitude: 0 };
@@ -15,9 +15,8 @@ export function geoLocationFinder() {
 
   try {
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    return geoLocation;
   } catch (error) {
-    errorHandler({ message: getErrorMessage(error) });
+    return getErrorMessage(error);
   }
-
-  return geoLocation;
 }
