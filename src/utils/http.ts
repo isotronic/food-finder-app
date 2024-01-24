@@ -7,7 +7,7 @@ export async function sendSearchRequest(searchQuery: string, geoLocation?: GeoLo
     "Content-Type": "application/json",
     "X-Goog-Api-Key": import.meta.env.VITE_PLACES_API_KEY,
     "X-Goog-FieldMask":
-      "places.formattedAddress,places.displayName.text,places.location,places.rating,places.id",
+      "places.formattedAddress,places.displayName.text,places.location,places.rating,places.id,places.types",
   };
 
   let searchOptions: SearchOptions = {
@@ -37,5 +37,5 @@ export async function sendSearchRequest(searchQuery: string, geoLocation?: GeoLo
   });
 
   const responseData = await response.json();
-  console.log(responseData);
+  return responseData.places;
 }
