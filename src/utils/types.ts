@@ -8,3 +8,12 @@ export type SearchOptions = {
   maxResultCount: number;
   locationBias?: object;
 };
+
+export type SearchResult = {
+  displayName: { text: string };
+  formattedAddress: string;
+  id: string;
+  location: GeoLocation;
+  rating: number;
+  types: string[];
+};
