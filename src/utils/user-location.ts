@@ -1,22 +1,25 @@
+import { getErrorMessage } from "./error-handler";
 import { GeoLocation } from "./types";
-import { getErrorMessage } from "../utils/error-handler";
 
-export function geoLocationFinder() {
-  const geoLocation: GeoLocation = { latitude: 0, longitude: 0 };
+export function geoLocationFinder(
+  setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation>>,
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
+) {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      setGeoLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+    },
+    (error) => {
+      setErrorMessage(getErrorMessage(error));
+    }
+  );
 
-  function successCallback(position: GeolocationPosition) {
-    geoLocation.latitude = position.coords.latitude;
-    geoLocation.longitude = position.coords.longitude;
-  }
-  function errorCallback(error: GeolocationPositionError) {
-    throw new Error(error.message);
-    // console.warn(`ERROR(${error.code}): ${error.message}`);
-  }
-
-  try {
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    return geoLocation;
-  } catch (error) {
-    return getErrorMessage(error);
-  }
+  // return new Promise<GeolocationPosition>((resolve, reject) =>
+  //   navigator.geolocation.getCurrentPosition(resolve, reject)
+  // ).then(
+  //   (position): GeoLocation => ({
+  //     latitude: position.coords.latitude,
+  //     longitude: position.coords.longitude,
+  //   })
+  // );
 }
