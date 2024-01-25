@@ -2,6 +2,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 import { Button } from "@mui/material";
 import { geoLocationFinder } from "../utils/user-location";
 
@@ -17,6 +18,7 @@ export default function Search() {
     longitude: -0.13,
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [searchResult, setSearchResult] = useState<SearchResult[]>();
 
   function changeSearchQueryHandler(
@@ -25,11 +27,14 @@ export default function Search() {
     setSearchQuery(event.target.value);
   }
 
-  function geoLocationFinderHandler() {
-    const userLocation = geoLocationFinder();
-
-    if (typeof userLocation === "object") setGeoLocation(userLocation);
-    if (typeof userLocation === "string") console.log(userLocation);
+  async function geoLocationFinderHandler() {
+    geoLocationFinder(setGeoLocation, setErrorMessage);
+    // try {
+    //   const userLocation = await geoLocationFinder();
+    //   if (userLocation.latitude && userLocation.longitude) setGeoLocation(userLocation);
+    // } catch (error) {
+    //   setErrorMessage(getErrorMessage(error));
+    // }
   }
 
   async function searchRequestHandler() {
@@ -38,6 +43,11 @@ export default function Search() {
   }
   return (
     <Container maxWidth="md">
+      {errorMessage && (
+        <Box sx={{ my: 4 }}>
+          <Alert severity="error">{errorMessage}</Alert>
+        </Box>
+      )}
       <Box sx={{ my: 4 }}>
         <Form onSubmit={searchRequestHandler}>
           <Typography variant="h5" align="center" sx={{ my: 2 }}>
@@ -50,6 +60,7 @@ export default function Search() {
             onChange={changeSearchQueryHandler}
             sx={{ my: 2 }}
           />
+
           <Box display="flex" justifyContent="flex-end">
             <Button
               // disabled={JSON.stringify(geoLocation) !== JSON.stringify({ latitude: 0, longitude: 0 })}
