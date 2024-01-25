@@ -57,6 +57,7 @@ export default function Search() {
             fullWidth
             id="foodSearch"
             label="Search"
+            type="search"
             onChange={changeSearchQueryHandler}
             sx={{ my: 2 }}
           />
