@@ -23,3 +23,10 @@ export interface GoogleMapDisplayProps {
   longitude: number;
   searchResult?: SearchResult[];
 }
+
+export interface SearchFormProps {
+  geoLocation: GeoLocation;
+  setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation>>;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSearchResult: React.Dispatch<React.SetStateAction<SearchResult[] | undefined>>;
+}
