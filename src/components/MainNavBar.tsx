@@ -1,5 +1,5 @@
-import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { useState } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,69 +13,108 @@ import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 export default function MainNavBar() {
-  const [auth, setAuth] = React.useState(false);
-  const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(null);
+  const [auth, setAuth] = useState(false);
+  const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
+  const [authMenuAnchor, setAuthMenuAnchor] = useState<null | HTMLElement>(null);
 
-  function handleOpenMenu(event: React.MouseEvent<HTMLButtonElement>) {
-    setAnchorElement(event.currentTarget);
+  function openUserMenuHandler(event: React.MouseEvent<HTMLButtonElement>) {
+    setUserMenuAnchor(event.currentTarget);
   }
 
-  function handleCloseMenu() {
-    setAnchorElement(null);
+  function openAuthMenuHandler(event: React.MouseEvent<HTMLButtonElement>) {
+    setAuthMenuAnchor(event.currentTarget);
   }
 
-  function handleAuth() {
+  function closeUserMenuHandler() {
+    setUserMenuAnchor(null);
+  }
+
+  function closeAuthMenuHandler() {
+    setAuthMenuAnchor(null);
+  }
+
+  function authHandler() {
     setAuth((prevState) => !prevState);
+    setUserMenuAnchor(null);
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <RestaurantIcon sx={{ display: "flex", mr: 1 }} />
           <Typography
             variant="h6"
-            component={NavLink}
+            component={RouterLink}
             to="/"
             sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
           >
             Food Finder
           </Typography>
           {(auth && (
-            <div>
+            <>
               <IconButton
                 size="large"
                 aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenMenu}
+                aria-controls="user-menu-appbar"
+                aria-haspopup="menu"
+                onClick={openUserMenuHandler}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
               <Menu
-                id="menu-appbar"
-                anchorEl={anchorElement}
+                id="user-menu-appbar"
+                anchorEl={userMenuAnchor}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "left",
                 }}
-                open={Boolean(anchorElement)}
-                onClose={handleCloseMenu}
+                open={Boolean(userMenuAnchor)}
+                onClose={closeUserMenuHandler}
               >
-                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
-                {/* <MenuItem onClick={handleAuth}>Logout</MenuItem> */}
+                <MenuItem onClick={closeUserMenuHandler}>Profile</MenuItem>
+                <MenuItem onClick={closeUserMenuHandler}>My account</MenuItem>
+                <MenuItem onClick={authHandler}>Logout</MenuItem>
               </Menu>
-            </div>
+            </>
           )) || (
-            <Button color="inherit" onClick={handleAuth}>
-              Login
-            </Button>
+            <>
+              <Button
+                color="inherit"
+                aria-controls="auth-menu-appbar"
+                aria-haspopup="menu"
+                onClick={openAuthMenuHandler}
+              >
+                Login
+              </Button>
+              <Menu
+                id="auth-menu-appbar"
+                anchorEl={authMenuAnchor}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(authMenuAnchor)}
+                onClose={closeAuthMenuHandler}
+              >
+                <MenuItem component={RouterLink} to="/auth/login">
+                  Login
+                </MenuItem>
+                <MenuItem component={RouterLink} to="/auth/register">
+                  Register
+                </MenuItem>
+              </Menu>
+            </>
           )}
         </Toolbar>
       </AppBar>
