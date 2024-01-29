@@ -39,7 +39,7 @@ export default function MainNavBar() {
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="sticky">
         <Toolbar>
           <RestaurantIcon sx={{ display: "flex", mr: 1 }} />
           <Typography
