@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-import { sendSearchRequest } from "../utils/http";
+import { sendSearchRequest } from "../utils/places-api";
 import { geoLocationFinder } from "../utils/user-location";
 import { SearchFormProps } from "../utils/types";
 
