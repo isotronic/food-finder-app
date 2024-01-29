@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export interface GeoLocation {
   latitude: number;
   longitude: number;
@@ -29,4 +31,8 @@ export interface SearchFormProps {
   setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
   setSearchResult: React.Dispatch<React.SetStateAction<SearchResult[] | undefined>>;
+}
+
+export interface AuthContextProps {
+  user: User | null;
 }
