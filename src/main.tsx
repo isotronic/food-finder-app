@@ -1,11 +1,16 @@
 import * as React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
+
+import AuthProvider from "./context/AuthProvider";
 import Root from "./routes/Root";
 import Search from "./routes/Search";
+import Auth from "./routes/Auth";
 import ErrorPage from "./ErrorPage";
+
 import theme from "./theme";
 
 import "./index.css";
@@ -19,7 +24,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    children: [{ index: true, element: <Search /> }],
+    children: [
+      { index: true, element: <Search /> },
+      { path: "/auth/:authMethod", element: <Auth /> },
+    ],
   },
 ]);
 
@@ -27,7 +35,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
