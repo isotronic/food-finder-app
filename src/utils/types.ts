@@ -36,3 +36,8 @@ export interface SearchFormProps {
 export interface AuthContextProps {
   user: User | null;
 }
+
+export interface AuthenticationFormValues {
+  email: string;
+  password: string;
+}
