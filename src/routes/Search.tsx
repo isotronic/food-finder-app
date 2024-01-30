@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
+import { Alert, Box, Container } from "@mui/material";
 
 import { GeoLocation, SearchResult } from "../utils/types";
 

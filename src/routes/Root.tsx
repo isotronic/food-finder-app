@@ -1,5 +1,4 @@
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import MainNavBar from "../components/MainNavBar";
 import Copyright from "../components/Copyright";

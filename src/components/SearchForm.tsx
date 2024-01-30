@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { Form } from "react-router-dom";
 
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 import { sendSearchRequest } from "../utils/places-api";
 import { geoLocationFinder } from "../utils/user-location";
