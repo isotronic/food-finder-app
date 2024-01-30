@@ -1,8 +1,8 @@
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 import { Container, Box, Typography } from "@mui/material";
-import MainNavBar from "./components/MainNavBar";
+import MainNavBar from "../components/MainNavBar";
 
-export default function ErrorPage() {
+export default function Error() {
   const error = useRouteError();
 
   return (
