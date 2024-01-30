@@ -37,8 +37,8 @@ export default function AuthForm({ authMethod }: { authMethod: string | undefine
     }
   }
   return (
-    <Box sx={{ my: 4 }}>
-      <Typography variant="h5" align="center" sx={{ my: 2 }}>
+    <Box sx={{ my: 6 }}>
+      <Typography variant="h5" align="center" sx={{ my: 4 }}>
         {authMethod === "register" ? "Register" : "Login"}
       </Typography>
       <form onSubmit={submitHandler}>

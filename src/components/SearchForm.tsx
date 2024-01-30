@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Form } from "react-router-dom";
+import { FormEvent, useState } from "react";
 
 import { Box, Button, TextField, Typography } from "@mui/material";
 
@@ -31,17 +30,18 @@ export default function SearchForm({
     // }
   }
 
-  async function searchRequestHandler() {
+  async function searchRequestHandler(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const result = await sendSearchRequest(searchQuery, geoLocation);
     setSearchResult(result);
   }
 
   return (
-    <Box sx={{ my: 4 }}>
-      <Form onSubmit={searchRequestHandler}>
-        <Typography variant="h5" align="center" sx={{ my: 2 }}>
-          What are you craving today?
-        </Typography>
+    <Box sx={{ my: 6 }}>
+      <Typography variant="h5" align="center" sx={{ my: 4 }}>
+        What are you craving today?
+      </Typography>
+      <form onSubmit={searchRequestHandler}>
         <TextField
           fullWidth
           id="foodSearch"
@@ -64,7 +64,7 @@ export default function SearchForm({
             Search
           </Button>
         </Box>
-      </Form>
+      </form>
     </Box>
   );
 }
