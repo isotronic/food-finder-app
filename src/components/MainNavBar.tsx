@@ -1,19 +1,24 @@
-import { Link as RouterLink } from "react-router-dom";
-import { useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import IconButton from "@mui/material/IconButton";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { AccountCircle, Restaurant } from "@mui/icons-material";
+import { AuthContext } from "../context/AuthProvider";
+import { logoutUser } from "../utils/firebase-auth";
+import { getErrorMessage } from "../utils/error-handler";
 
 export default function MainNavBar() {
-  const [auth, setAuth] = useState(false);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
   const [authMenuAnchor, setAuthMenuAnchor] = useState<null | HTMLElement>(null);
 
@@ -33,15 +38,21 @@ export default function MainNavBar() {
     setAuthMenuAnchor(null);
   }
 
-  function authHandler() {
-    setAuth((prevState) => !prevState);
+  async function logoutHandler() {
+    try {
+      await logoutUser();
+      navigate("/");
+    } catch (error) {
+      console.log(`Error while logging out: ${getErrorMessage(error)}`);
+    }
+
     setUserMenuAnchor(null);
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
         <Toolbar>
-          <RestaurantIcon sx={{ display: "flex", mr: 1 }} />
+          <Restaurant sx={{ display: "flex", mr: 1 }} />
           <Typography
             variant="h6"
             component={RouterLink}
@@ -50,7 +61,7 @@ export default function MainNavBar() {
           >
             Food Finder
           </Typography>
-          {(auth && (
+          {(user && (
             <>
               <IconButton
                 size="large"
@@ -79,7 +90,7 @@ export default function MainNavBar() {
               >
                 <MenuItem onClick={closeUserMenuHandler}>Profile</MenuItem>
                 <MenuItem onClick={closeUserMenuHandler}>My account</MenuItem>
-                <MenuItem onClick={authHandler}>Logout</MenuItem>
+                <MenuItem onClick={logoutHandler}>Logout</MenuItem>
               </Menu>
             </>
           )) || (
@@ -107,10 +118,10 @@ export default function MainNavBar() {
                 open={Boolean(authMenuAnchor)}
                 onClose={closeAuthMenuHandler}
               >
-                <MenuItem component={RouterLink} to="/auth/login">
+                <MenuItem onClick={closeAuthMenuHandler} component={RouterLink} to="/auth/login">
                   Login
                 </MenuItem>
-                <MenuItem component={RouterLink} to="/auth/register">
+                <MenuItem onClick={closeAuthMenuHandler} component={RouterLink} to="/auth/register">
                   Register
                 </MenuItem>
               </Menu>
