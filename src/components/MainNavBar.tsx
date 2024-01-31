@@ -49,18 +49,23 @@ export default function MainNavBar() {
     setUserMenuAnchor(null);
   }
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ display: "flex" }}>
       <AppBar position="sticky">
         <Toolbar>
-          <Restaurant sx={{ display: "flex", mr: 1 }} />
-          <Typography
-            variant="h6"
-            component={RouterLink}
-            to="/"
-            sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
-          >
-            Food Finder
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Restaurant sx={{ mr: 1, color: "white", verticalAlign: "middle" }} />
+            <Typography
+              variant="h6"
+              component={RouterLink}
+              to="/"
+              sx={{ mr: 12, textDecoration: "none", color: "white", verticalAlign: "middle" }}
+            >
+              Food Finder
+            </Typography>
+          </Box>
+          <Button component={RouterLink} to="/" sx={{ color: "white" }}>
+            Search
+          </Button>
           {(user && (
             <>
               <IconButton
@@ -69,7 +74,7 @@ export default function MainNavBar() {
                 aria-controls="user-menu-appbar"
                 aria-haspopup="menu"
                 onClick={openUserMenuHandler}
-                color="inherit"
+                sx={{ color: "white", justifyContent: "flex-end" }}
               >
                 <AccountCircle />
               </IconButton>
@@ -104,7 +109,7 @@ export default function MainNavBar() {
           )) || (
             <>
               <Button
-                color="inherit"
+                sx={{ color: "white", justifyContent: "flex-end" }}
                 aria-controls="auth-menu-appbar"
                 aria-haspopup="menu"
                 onClick={openAuthMenuHandler}
