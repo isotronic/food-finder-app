@@ -9,7 +9,9 @@ import AuthProvider from "./context/AuthProvider";
 import Root from "./routes/Root";
 import Search from "./routes/Search";
 import Auth from "./routes/Auth";
-import ErrorPage from "./ErrorPage";
+import Error from "./routes/Error";
+import Dashboard from "./routes/Dashboard";
+import Settings from "./routes/Settings";
 
 import theme from "./theme";
 
@@ -23,10 +25,12 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <ErrorPage />,
+    errorElement: <Error />,
     children: [
       { index: true, element: <Search /> },
       { path: "/auth/:authMethod", element: <Auth /> },
+      { path: "/user/dashboard", element: <Dashboard /> },
+      { path: "/user/settings", element: <Settings /> },
     ],
   },
 ]);

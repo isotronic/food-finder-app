@@ -88,8 +88,16 @@ export default function MainNavBar() {
                 open={Boolean(userMenuAnchor)}
                 onClose={closeUserMenuHandler}
               >
-                <MenuItem onClick={closeUserMenuHandler}>Profile</MenuItem>
-                <MenuItem onClick={closeUserMenuHandler}>My account</MenuItem>
+                <MenuItem
+                  onClick={closeUserMenuHandler}
+                  component={RouterLink}
+                  to="/user/dashboard"
+                >
+                  Dashboard
+                </MenuItem>
+                <MenuItem onClick={closeUserMenuHandler} component={RouterLink} to="/user/settings">
+                  Settings
+                </MenuItem>
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
               </Menu>
             </>
