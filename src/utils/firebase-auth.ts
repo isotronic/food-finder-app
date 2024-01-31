@@ -6,6 +6,7 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { AuthenticationFormValues } from "./types";
 
@@ -25,5 +26,10 @@ export async function loginUser({ email, password }: AuthenticationFormValues) {
 
 export async function logoutUser() {
   const result = await signOut(firebaseAuth);
+  return result;
+}
+
+export async function updateDisplayName(displayName: string) {
+  const result = await updateProfile(firebaseAuth.currentUser!, { displayName });
   return result;
 }
