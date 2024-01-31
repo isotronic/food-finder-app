@@ -2,10 +2,10 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthenticationFormValues } from "../utils/types";
-import { createUser, loginUser } from "../utils/firebase-auth";
+import { createUser, loginUser } from "../utils/firebase/auth";
 import { getErrorMessage } from "../utils/error-handler";
 
-const defaultFormValues = { email: "", password: "" } as AuthenticationFormValues;
+const defaultFormValues = { displayName: "", email: "", password: "" } as AuthenticationFormValues;
 
 export default function AuthForm({ authMethod }: { authMethod: string | undefined }) {
   const navigate = useNavigate();
@@ -18,11 +18,11 @@ export default function AuthForm({ authMethod }: { authMethod: string | undefine
 
   async function submitHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const { email, password } = formFields;
+    const { displayName, email, password } = formFields;
 
     if (authMethod === "register") {
       try {
-        const user = await createUser({ email, password });
+        const user = await createUser({ displayName, email, password });
         if (user) navigate("/");
       } catch (error) {
         console.log(getErrorMessage(error));
@@ -38,10 +38,21 @@ export default function AuthForm({ authMethod }: { authMethod: string | undefine
   }
   return (
     <Box sx={{ my: 6 }}>
-      <Typography variant="h5" align="center" sx={{ my: 4 }}>
+      <Typography variant="h5" align="center" sx={{ my: 2 }}>
         {authMethod === "register" ? "Register" : "Login"}
       </Typography>
       <form onSubmit={submitHandler}>
+        {authMethod === "register" && (
+          <TextField
+            fullWidth
+            name="displayName"
+            label="Your Name"
+            type="text"
+            value={formFields.displayName}
+            onChange={changeHandler}
+            sx={{ my: 1 }}
+          />
+        )}
         <TextField
           fullWidth
           required
@@ -50,6 +61,7 @@ export default function AuthForm({ authMethod }: { authMethod: string | undefine
           type="email"
           value={formFields.email}
           onChange={changeHandler}
+          sx={{ my: 1 }}
         />
         <TextField
           fullWidth
@@ -59,9 +71,9 @@ export default function AuthForm({ authMethod }: { authMethod: string | undefine
           type="password"
           value={formFields.password}
           onChange={changeHandler}
-          sx={{ my: 2 }}
+          sx={{ my: 1 }}
         />
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" justifyContent="flex-end" sx={{ my: 1 }}>
           <Button variant="contained" type="submit">
             {authMethod}
           </Button>

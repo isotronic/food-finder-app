@@ -38,6 +38,7 @@ export interface AuthContextProps {
 }
 
 export interface AuthenticationFormValues {
+  displayName?: string;
   email: string;
   password: string;
 }
