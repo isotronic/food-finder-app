@@ -1,4 +1,4 @@
-import { firebaseApp } from "./firebase-setup";
+import { firebaseApp } from "./setup";
 import {
   browserLocalPersistence,
   createUserWithEmailAndPassword,
@@ -8,7 +8,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { AuthenticationFormValues } from "./types";
+import { AuthenticationFormValues } from "../types";
 
 export const firebaseAuth = getAuth(firebaseApp);
 

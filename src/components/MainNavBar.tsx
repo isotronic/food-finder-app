@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { AccountCircle, Restaurant } from "@mui/icons-material";
 import { AuthContext } from "../context/AuthProvider";
-import { logoutUser } from "../utils/firebase-auth";
+import { logoutUser } from "../utils/firebase/auth";
 import { getErrorMessage } from "../utils/error-handler";
 
 export default function MainNavBar() {
