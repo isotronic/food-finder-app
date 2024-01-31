@@ -1,11 +1,13 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { firebaseAuth, updateDisplayName } from "../utils/firebase-auth";
+import { firebaseAuth, updateDisplayName } from "../utils/firebase/auth";
 import { getErrorMessage } from "../utils/error-handler";
 
 export default function UserProfileForm() {
   const user = firebaseAuth.currentUser;
-  const [displayName, setDisplayName] = useState(user?.displayName);
+  const [displayName, setDisplayName] = useState(
+    user?.displayName !== null ? user?.displayName : ""
+  );
 
   function changeHandler(event: ChangeEvent<HTMLInputElement>) {
     setDisplayName(event.target.value);
@@ -42,7 +44,7 @@ export default function UserProfileForm() {
         <TextField
           fullWidth
           name="displayName"
-          label="Display Name"
+          label="Your Name"
           type="text"
           value={displayName}
           onChange={changeHandler}
