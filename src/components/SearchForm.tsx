@@ -41,7 +41,7 @@ export default function SearchForm({
   return (
     <Box sx={{ my: 6 }}>
       <Typography variant="h5" align="center" sx={{ my: 4 }}>
-        What are you craving today{user && ", " + user.displayName}?
+        What are you craving today{user && user.displayName !== null && ", " + user.displayName}?
       </Typography>
       <form onSubmit={searchRequestHandler}>
         <TextField
