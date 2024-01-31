@@ -6,6 +6,7 @@ import { sendSearchRequest } from "../utils/places-api";
 import { geoLocationFinder } from "../utils/user-location";
 import { SearchFormProps } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
+import { getErrorMessage } from "../utils/error-handler";
 
 export default function SearchForm({
   geoLocation,
@@ -23,13 +24,13 @@ export default function SearchForm({
   }
 
   async function geoLocationFinderHandler() {
-    geoLocationFinder(setGeoLocation, setErrorMessage);
-    // try {
-    //   const userLocation = await geoLocationFinder();
-    //   if (userLocation.latitude && userLocation.longitude) setGeoLocation(userLocation);
-    // } catch (error) {
-    //   setErrorMessage(getErrorMessage(error));
-    // }
+    // geoLocationFinder(setGeoLocation, setErrorMessage);
+    try {
+      const userLocation = await geoLocationFinder();
+      if (userLocation.latitude && userLocation.longitude) setGeoLocation(userLocation);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    }
   }
 
   async function searchRequestHandler(event: FormEvent<HTMLFormElement>) {
