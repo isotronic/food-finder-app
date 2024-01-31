@@ -1,10 +1,11 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 import { sendSearchRequest } from "../utils/places-api";
 import { geoLocationFinder } from "../utils/user-location";
 import { SearchFormProps } from "../utils/types";
+import { AuthContext } from "../context/AuthProvider";
 
 export default function SearchForm({
   geoLocation,
@@ -13,6 +14,7 @@ export default function SearchForm({
   setSearchResult,
 }: SearchFormProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useContext(AuthContext);
 
   function changeSearchQueryHandler(
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -39,7 +41,7 @@ export default function SearchForm({
   return (
     <Box sx={{ my: 6 }}>
       <Typography variant="h5" align="center" sx={{ my: 4 }}>
-        What are you craving today?
+        What are you craving today{user && ", " + user.displayName}?
       </Typography>
       <form onSubmit={searchRequestHandler}>
         <TextField
