@@ -1,30 +1,24 @@
-# React + TypeScript + Vite
+# Food Finder App (in developement)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a web app that helps users find nearby restaurants based on their preferences and location.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Users can search for restaurants by cuisine, price range, rating, or location
+- Users can view restaurant details, such as address, phone number, website, menu, and reviews.
+- Users can get directions to the restaurant using Google Maps.
+- Users can save their favorite restaurants and view them later.
 
-## Expanding the ESLint configuration
+## Technologies
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This project is built with TypeScript, React, and Firebase.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+To run this project locally, you need to have Node.js and npm installed on your machine.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Clone this repository: `git clone https://github.com/isotronic/food-finder-app.git`
+2. Navigate to the project folder: `cd food-finder-app`
+3. Install the dependencies: `yarn`
+4. Start the development server: `yarn dev`
+5. Open your browser and go to `http://localhost:5173`
