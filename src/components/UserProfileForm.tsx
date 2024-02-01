@@ -1,13 +1,25 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { firebaseAuth, updateDisplayName } from "../utils/firebase/auth";
 import { getErrorMessage } from "../utils/error-handler";
 
 export default function UserProfileForm() {
-  const user = firebaseAuth.currentUser;
-  const [displayName, setDisplayName] = useState(
-    user?.displayName !== null ? user?.displayName : ""
-  );
+  const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        setEmail(user.email || "");
+        setDisplayName(user.displayName || "");
+      } else {
+        setEmail("");
+        setDisplayName("");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   function changeHandler(event: ChangeEvent<HTMLInputElement>) {
     setDisplayName(event.target.value);
@@ -29,7 +41,7 @@ export default function UserProfileForm() {
 
   return (
     <Box sx={{ my: 6 }}>
-      <Typography variant="h5" align="center" sx={{ my: 4 }}>
+      <Typography variant="h5" sx={{ my: 4 }}>
         Profile settings
       </Typography>
       <form onSubmit={submitHandler}>
@@ -39,7 +51,7 @@ export default function UserProfileForm() {
           name="email"
           label="Email Address"
           type="email"
-          value={user!.email!}
+          value={email}
         />
         <TextField
           fullWidth
