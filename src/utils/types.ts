@@ -31,7 +31,9 @@ export interface GoogleMapDisplayProps {
 
 export interface SearchFormProps {
   geoLocation: GeoLocation;
+  searchQuery: string;
   setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation>>;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
   setSearchResult: React.Dispatch<React.SetStateAction<SearchResult[] | undefined>>;
 }
@@ -49,6 +51,13 @@ export interface AuthenticationFormValues {
 export interface SearchPreferences {
   searchRadius?: number;
   minRating?: number;
-  priceLevel?: string;
+  priceLevel?: string[];
   openNow?: boolean;
+}
+
+export interface SearchHistoryData {
+  id: string;
+  date: Date;
+  searchQuery: string;
+  searchResult: SearchResult[];
 }
