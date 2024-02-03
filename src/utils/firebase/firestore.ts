@@ -3,13 +3,14 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
   serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { firebaseApp } from "./setup";
-import { GeoLocation, SearchResult } from "../types";
+import { GeoLocation, SearchHistoryData, SearchResult } from "../types";
 
 const db = getFirestore(firebaseApp);
 
@@ -32,9 +33,32 @@ export async function fetchLocationPreference(
   if (snapshot.exists()) setGeoLocation(snapshot.data().geoLocation);
 }
 
-export async function saveSearchResult(userId: string, searchResult: SearchResult[]) {
+export async function saveSearchResult(
+  userId: string,
+  searchQuery: string,
+  searchResult: SearchResult[]
+) {
   await addDoc(collection(db, "users", userId, "searchHistory"), {
     date: serverTimestamp(),
+    searchQuery,
     searchResult,
   });
+}
+
+export async function fetchSearchHistory(userId: string): Promise<SearchHistoryData[]> {
+  const snapshot = await getDocs(collection(db, "users", userId, "searchHistory"));
+
+  if (!snapshot.empty) {
+    return snapshot.docs.map((row) => {
+      const data = row.data();
+      return {
+        id: row.id,
+        date: data.date.toDate(),
+        searchQuery: data.searchQuery,
+        searchResult: data.searchResult,
+      };
+    });
+  } else {
+    return [];
+  }
 }
