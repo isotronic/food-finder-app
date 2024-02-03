@@ -18,16 +18,17 @@ export default function Search() {
   });
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [searchResult, setSearchResult] = useState<SearchResult[]>();
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (user && searchResult) {
       try {
-        saveSearchResult(user.uid, searchResult);
+        saveSearchResult(user.uid, searchQuery, searchResult);
       } catch (error) {
         setErrorMessage(getErrorMessage(error));
       }
     }
-  }, [searchResult, user]);
+  }, [searchResult, searchQuery, user]);
 
   return (
     <Container maxWidth="md">
@@ -38,7 +39,9 @@ export default function Search() {
       )}
       <SearchForm
         geoLocation={geoLocation}
+        searchQuery={searchQuery}
         setGeoLocation={setGeoLocation}
+        setSearchQuery={setSearchQuery}
         setErrorMessage={setErrorMessage}
         setSearchResult={setSearchResult}
       />

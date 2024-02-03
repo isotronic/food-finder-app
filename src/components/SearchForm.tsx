@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext } from "react";
 
 import { Box, Button, TextField, Typography } from "@mui/material";
 
@@ -10,11 +10,12 @@ import { getErrorMessage } from "../utils/error-handler";
 
 export default function SearchForm({
   geoLocation,
+  searchQuery,
   setGeoLocation,
+  setSearchQuery,
   setErrorMessage,
   setSearchResult,
 }: SearchFormProps) {
-  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useContext(AuthContext);
 
   function changeSearchQueryHandler(
