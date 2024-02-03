@@ -1,6 +1,10 @@
-import { GeoLocation, SearchOptions } from "./types";
+import { GeoLocation, SearchOptions, SearchPreferences } from "./types";
 
-export async function sendSearchRequest(searchQuery: string, geoLocation?: GeoLocation) {
+export async function sendSearchRequest(
+  searchQuery: string,
+  geoLocation?: GeoLocation,
+  searchPreferences?: SearchPreferences
+) {
   const endpoint = "https://places.googleapis.com/v1/places:searchText";
 
   const headers = {
@@ -21,14 +25,22 @@ export async function sendSearchRequest(searchQuery: string, geoLocation?: GeoLo
       locationBias: {
         circle: {
           center: {
-            latitude: geoLocation?.latitude,
-            longitude: geoLocation?.longitude,
+            latitude: geoLocation.latitude,
+            longitude: geoLocation.longitude,
           },
-          radius: 1000.0,
+          radius: searchPreferences?.searchRadius || 500.0,
         },
       },
     };
   }
+
+  if (searchPreferences?.openNow) searchOptions = { ...searchOptions, openNow: true };
+
+  if (searchPreferences?.minRating)
+    searchOptions = { ...searchOptions, minRating: searchPreferences.minRating };
+
+  if (searchPreferences?.priceLevel)
+    searchOptions = { ...searchOptions, priceLevels: searchPreferences.priceLevel };
 
   const response = await fetch(endpoint, {
     method: "POST",

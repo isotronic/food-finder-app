@@ -9,6 +9,9 @@ export interface SearchOptions {
   textQuery: string;
   maxResultCount: number;
   locationBias?: object;
+  minRating?: number;
+  priceLevels?: string;
+  openNow?: boolean;
 }
 
 export interface SearchResult {
@@ -41,4 +44,11 @@ export interface AuthenticationFormValues {
   displayName?: string;
   email: string;
   password: string;
+}
+
+export interface SearchPreferences {
+  searchRadius?: number;
+  minRating?: number;
+  priceLevel?: string;
+  openNow?: boolean;
 }
