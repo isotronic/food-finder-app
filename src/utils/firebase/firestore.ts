@@ -1,6 +1,15 @@
-import { doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { firebaseApp } from "./setup";
-import { GeoLocation } from "../types";
+import { GeoLocation, SearchResult } from "../types";
 
 const db = getFirestore(firebaseApp);
 
@@ -21,4 +30,11 @@ export async function fetchLocationPreference(
   const snapshot = await getDoc(doc(db, "users", userId));
 
   if (snapshot.exists()) setGeoLocation(snapshot.data().geoLocation);
+}
+
+export async function saveSearchResult(userId: string, searchResult: SearchResult[]) {
+  await addDoc(collection(db, "users", userId, "searchHistory"), {
+    date: serverTimestamp(),
+    searchResult,
+  });
 }
