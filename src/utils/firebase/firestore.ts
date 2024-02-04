@@ -10,7 +10,13 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { firebaseApp } from "./setup";
-import { GeoLocation, SearchHistoryData, SearchResult } from "../types";
+import {
+  GeoLocation,
+  SearchHistoryData,
+  SearchPreferences,
+  SearchResult,
+  SetSearchPreferences,
+} from "../types";
 
 const db = getFirestore(firebaseApp);
 
@@ -33,7 +39,7 @@ export async function fetchLocationPreference(
   if (snapshot.exists()) setGeoLocation(snapshot.data().geoLocation);
 }
 
-export async function saveSearchResult(
+export async function saveSearchHistory(
   userId: string,
   searchQuery: string,
   searchResult: SearchResult[]
@@ -60,5 +66,34 @@ export async function fetchSearchHistory(userId: string): Promise<SearchHistoryD
     });
   } else {
     return [];
+  }
+}
+
+export async function saveSearchPreferences(
+  userId: string,
+  { searchRadius, minRating, priceLevels, openNow }: SearchPreferences
+) {
+  await updateDoc(doc(db, "users", userId), {
+    searchPreferences: {
+      searchRadius,
+      minRating,
+      priceLevels,
+      openNow,
+    },
+  });
+}
+
+export async function fetchSearchPreferences(
+  userId: string,
+  { setSearchRadius, setMinRating, setPriceLevels, setOpenNow }: SetSearchPreferences
+) {
+  const snapshot = await getDoc(doc(db, "users", userId));
+
+  if (snapshot.exists()) {
+    const data = snapshot.data();
+    setSearchRadius(data.searchPreferences.searchRadius);
+    setMinRating(data.searchPreferences.minRating);
+    setPriceLevels(data.searchPreferences.priceLevels);
+    setOpenNow(data.searchPreferences.openNow);
   }
 }

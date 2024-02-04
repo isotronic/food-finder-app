@@ -50,9 +50,16 @@ export interface AuthenticationFormValues {
 
 export interface SearchPreferences {
   searchRadius?: number;
-  minRating?: number;
-  priceLevel?: string[];
+  minRating?: number | null;
+  priceLevels?: string[];
   openNow?: boolean;
+}
+
+export interface SetSearchPreferences {
+  setSearchRadius: React.Dispatch<React.SetStateAction<number>>;
+  setMinRating: React.Dispatch<React.SetStateAction<number | null>>;
+  setPriceLevels: React.Dispatch<React.SetStateAction<string[]>>;
+  setOpenNow: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
 export interface SearchHistoryData {
