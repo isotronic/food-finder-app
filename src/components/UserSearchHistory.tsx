@@ -32,7 +32,6 @@ export default function UserSearchHistory({
     async function fetchData(userId: string) {
       try {
         const data = await fetchSearchHistory(userId);
-        console.log(data);
         setTableData(data);
       } catch (error) {
         setErrorMessage(getErrorMessage(error));
