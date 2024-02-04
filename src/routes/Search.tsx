@@ -7,8 +7,9 @@ import { GeoLocation, SearchResult } from "../utils/types";
 import GoogleMapDisplay from "../components/GoogleMapDisplay";
 import SearchForm from "../components/SearchForm";
 import { AuthContext } from "../context/AuthProvider";
-import { saveSearchResult } from "../utils/firebase/firestore";
+import { fetchLocationPreference, saveSearchResult } from "../utils/firebase/firestore";
 import { getErrorMessage } from "../utils/error-handler";
+import { firebaseAuth } from "../utils/firebase/auth";
 
 export default function Search() {
   const { user } = useContext(AuthContext);
@@ -29,6 +30,20 @@ export default function Search() {
       }
     }
   }, [searchResult, searchQuery, user]);
+
+  useEffect(() => {
+    const unsubscribe = firebaseAuth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          await fetchLocationPreference(user.uid, setGeoLocation);
+        } catch (error) {
+          setErrorMessage(getErrorMessage(error));
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, [setErrorMessage]);
 
   return (
     <Container maxWidth="md">
