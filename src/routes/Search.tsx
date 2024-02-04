@@ -7,7 +7,7 @@ import { GeoLocation, SearchResult } from "../utils/types";
 import GoogleMapDisplay from "../components/GoogleMapDisplay";
 import SearchForm from "../components/SearchForm";
 import { AuthContext } from "../context/AuthProvider";
-import { fetchLocationPreference, saveSearchResult } from "../utils/firebase/firestore";
+import { fetchLocationPreference, saveSearchHistory } from "../utils/firebase/firestore";
 import { getErrorMessage } from "../utils/error-handler";
 import { firebaseAuth } from "../utils/firebase/auth";
 
@@ -24,7 +24,7 @@ export default function Search() {
   useEffect(() => {
     if (user && searchResult) {
       try {
-        saveSearchResult(user.uid, searchQuery, searchResult);
+        saveSearchHistory(user.uid, searchQuery, searchResult);
       } catch (error) {
         setErrorMessage(getErrorMessage(error));
       }

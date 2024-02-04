@@ -1,9 +1,13 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { firebaseAuth, updateDisplayName } from "../utils/firebase/auth";
 import { getErrorMessage } from "../utils/error-handler";
 
-export default function UserProfileForm() {
+export default function UserProfileForm({
+  setErrorMessage,
+}: {
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+}) {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
 
@@ -21,10 +25,6 @@ export default function UserProfileForm() {
     return () => unsubscribe();
   }, []);
 
-  function changeHandler(event: ChangeEvent<HTMLInputElement>) {
-    setDisplayName(event.target.value);
-  }
-
   async function submitHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -32,10 +32,10 @@ export default function UserProfileForm() {
       try {
         await updateDisplayName(displayName);
       } catch (error) {
-        console.log(getErrorMessage(error));
+        setErrorMessage(getErrorMessage(error));
       }
     } else {
-      console.log("No display name set");
+      setErrorMessage("No display name set");
     }
   }
 
@@ -59,12 +59,12 @@ export default function UserProfileForm() {
           label="Your Name"
           type="text"
           value={displayName}
-          onChange={changeHandler}
+          onChange={(event) => setDisplayName(event.target.value)}
           sx={{ my: 2 }}
         />
         <Box display="flex" justifyContent="flex-end">
           <Button variant="contained" type="submit">
-            Save
+            Save Profile
           </Button>
         </Box>
       </form>
