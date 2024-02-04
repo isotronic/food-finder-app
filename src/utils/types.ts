@@ -10,7 +10,7 @@ export interface SearchOptions {
   maxResultCount: number;
   locationBias?: object;
   minRating?: number;
-  priceLevels?: string;
+  priceLevels?: string[];
   openNow?: boolean;
 }
 
@@ -30,9 +30,9 @@ export interface GoogleMapDisplayProps {
 }
 
 export interface SearchFormProps {
-  geoLocation: GeoLocation;
+  geoLocation: GeoLocation | undefined;
   searchQuery: string;
-  setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation>>;
+  setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation | undefined>>;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
   setSearchResult: React.Dispatch<React.SetStateAction<SearchResult[] | undefined>>;

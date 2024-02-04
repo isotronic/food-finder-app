@@ -26,7 +26,7 @@ export async function saveLocationPreference(userId: string, geoLocation: GeoLoc
 
 export async function fetchLocationPreference(
   userId: string,
-  setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation>>
+  setGeoLocation: React.Dispatch<React.SetStateAction<GeoLocation | undefined>>
 ) {
   const snapshot = await getDoc(doc(db, "users", userId));
 

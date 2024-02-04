@@ -13,7 +13,7 @@ import { firebaseAuth } from "../utils/firebase/auth";
 
 export default function Search() {
   const { user } = useContext(AuthContext);
-  const [geoLocation, setGeoLocation] = useState<GeoLocation>({
+  const [geoLocation, setGeoLocation] = useState<GeoLocation | undefined>({
     latitude: 51.5072,
     longitude: -0.13,
   });
@@ -61,8 +61,8 @@ export default function Search() {
         setSearchResult={setSearchResult}
       />
       <GoogleMapDisplay
-        latitude={geoLocation.latitude}
-        longitude={geoLocation.longitude}
+        latitude={geoLocation?.latitude ?? 0}
+        longitude={geoLocation?.longitude ?? 0}
         searchResult={searchResult}
       />
     </Container>
