@@ -5,6 +5,8 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  orderBy,
+  query,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -52,7 +54,9 @@ export async function saveSearchHistory(
 }
 
 export async function fetchSearchHistory(userId: string): Promise<SearchHistoryData[]> {
-  const snapshot = await getDocs(collection(db, "users", userId, "searchHistory"));
+  const snapshot = await getDocs(
+    query(collection(db, "users", userId, "searchHistory"), orderBy("date", "desc"))
+  );
 
   if (!snapshot.empty) {
     return snapshot.docs.map((row) => {
