@@ -39,8 +39,8 @@ export async function sendSearchRequest(
   if (searchPreferences?.minRating)
     searchOptions = { ...searchOptions, minRating: searchPreferences.minRating };
 
-  if (searchPreferences?.priceLevel)
-    searchOptions = { ...searchOptions, priceLevels: searchPreferences.priceLevel };
+  if (searchPreferences?.priceLevels)
+    searchOptions = { ...searchOptions, priceLevels: searchPreferences.priceLevels };
 
   const response = await fetch(endpoint, {
     method: "POST",

@@ -15,7 +15,7 @@ export default function Dashboard() {
       )}
       <Box sx={{ my: 6 }}>
         <Typography variant="h5" align="center" sx={{ my: 4 }}>
-          Hi {user?.displayName}, check out your previous searches below
+          Hi {user?.displayName || "there"}, check out your previous searches below
         </Typography>
         <UserSearchHistory setErrorMessage={setErrorMessage} />
       </Box>
