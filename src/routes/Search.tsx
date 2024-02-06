@@ -10,6 +10,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { fetchLocationPreference, saveSearchHistory } from "../utils/firebase/firestore";
 import { getErrorMessage } from "../utils/error-handler";
 import { firebaseAuth } from "../utils/firebase/auth";
+import HeaderSEO from "../components/HeaderSEO";
 
 export default function Search() {
   const { user } = useContext(AuthContext);
@@ -46,25 +47,31 @@ export default function Search() {
   }, [setErrorMessage]);
 
   return (
-    <Container maxWidth="md">
-      {errorMessage && (
-        <Box sx={{ my: 4 }}>
-          <Alert severity="error">{errorMessage}</Alert>
-        </Box>
-      )}
-      <SearchForm
-        geoLocation={geoLocation}
-        searchQuery={searchQuery}
-        setGeoLocation={setGeoLocation}
-        setSearchQuery={setSearchQuery}
-        setErrorMessage={setErrorMessage}
-        setSearchResult={setSearchResult}
+    <>
+      <HeaderSEO
+        title="Search"
+        description="Look for specific restaurants near you and collect your favourite ones!"
       />
-      <GoogleMapDisplay
-        latitude={geoLocation?.latitude ?? 0}
-        longitude={geoLocation?.longitude ?? 0}
-        searchResult={searchResult}
-      />
-    </Container>
+      <Container maxWidth="md">
+        {errorMessage && (
+          <Box sx={{ my: 4 }}>
+            <Alert severity="error">{errorMessage}</Alert>
+          </Box>
+        )}
+        <SearchForm
+          geoLocation={geoLocation}
+          searchQuery={searchQuery}
+          setGeoLocation={setGeoLocation}
+          setSearchQuery={setSearchQuery}
+          setErrorMessage={setErrorMessage}
+          setSearchResult={setSearchResult}
+        />
+        <GoogleMapDisplay
+          latitude={geoLocation?.latitude ?? 0}
+          longitude={geoLocation?.longitude ?? 0}
+          searchResult={searchResult}
+        />
+      </Container>
+    </>
   );
 }

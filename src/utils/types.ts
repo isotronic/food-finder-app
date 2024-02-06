@@ -68,3 +68,9 @@ export interface SearchHistoryData {
   searchQuery: string;
   searchResult: SearchResult[];
 }
+
+export interface HeaderSEOProps {
+  title: string;
+  description: string;
+  type?: string;
+}
