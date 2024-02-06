@@ -83,17 +83,23 @@ export async function saveSearchPreferences(
   });
 }
 
-export async function fetchSearchPreferences(
-  userId: string,
-  { setSearchRadius, setMinRating, setPriceLevels, setOpenNow }: SetSearchPreferences
-) {
+export async function fetchSearchPreferences({
+  userId,
+  noSetFunctions,
+  setSearchRadius,
+  setMinRating,
+  setPriceLevels,
+  setOpenNow,
+}: SetSearchPreferences) {
   const snapshot = await getDoc(doc(db, "users", userId));
 
   if (snapshot.exists()) {
     const data = snapshot.data();
-    setSearchRadius(data.searchPreferences.searchRadius);
-    setMinRating(data.searchPreferences.minRating);
-    setPriceLevels(data.searchPreferences.priceLevels);
-    setOpenNow(data.searchPreferences.openNow);
+    if (setSearchRadius) setSearchRadius(data.searchPreferences.searchRadius);
+    if (setMinRating) setMinRating(data.searchPreferences.minRating);
+    if (setPriceLevels) setPriceLevels(data.searchPreferences.priceLevels);
+    if (setOpenNow) setOpenNow(data.searchPreferences.openNow);
+
+    if (noSetFunctions) return data.searchPreferences;
   }
 }

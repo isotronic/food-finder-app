@@ -34,7 +34,8 @@ export async function sendSearchRequest(
     };
   }
 
-  if (searchPreferences?.openNow) searchOptions = { ...searchOptions, openNow: true };
+  if (searchPreferences?.openNow)
+    searchOptions = { ...searchOptions, openNow: searchPreferences.openNow };
 
   if (searchPreferences?.minRating)
     searchOptions = { ...searchOptions, minRating: searchPreferences.minRating };

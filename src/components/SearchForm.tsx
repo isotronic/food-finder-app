@@ -4,9 +4,10 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 
 import { sendSearchRequest } from "../utils/places-api";
 import { geoLocationFinder } from "../utils/user-location";
-import { SearchFormProps } from "../utils/types";
+import { SearchFormProps, SearchPreferences } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
 import { getErrorMessage } from "../utils/error-handler";
+import { fetchSearchPreferences } from "../utils/firebase/firestore";
 
 export default function SearchForm({
   geoLocation,
@@ -36,7 +37,19 @@ export default function SearchForm({
 
   async function searchRequestHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const result = await sendSearchRequest(searchQuery, geoLocation);
+
+    let searchPreferences: SearchPreferences = {};
+
+    if (user) {
+      try {
+        const userId = user.uid;
+        const noSetFunctions = true;
+        searchPreferences = await fetchSearchPreferences({ userId, noSetFunctions });
+      } catch (error) {
+        setErrorMessage(getErrorMessage(error));
+      }
+    }
+    const result = await sendSearchRequest(searchQuery, geoLocation, searchPreferences);
     setSearchResult(result);
   }
 

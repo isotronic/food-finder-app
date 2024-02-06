@@ -43,8 +43,10 @@ export default function UserSearchPreference({
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged(async (user) => {
       if (user) {
+        const userId = user.uid;
         try {
-          await fetchSearchPreferences(user.uid, {
+          await fetchSearchPreferences({
+            userId,
             setSearchRadius,
             setMinRating,
             setPriceLevels,

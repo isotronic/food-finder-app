@@ -56,10 +56,12 @@ export interface SearchPreferences {
 }
 
 export interface SetSearchPreferences {
-  setSearchRadius: React.Dispatch<React.SetStateAction<number>>;
-  setMinRating: React.Dispatch<React.SetStateAction<number | null>>;
-  setPriceLevels: React.Dispatch<React.SetStateAction<string[]>>;
-  setOpenNow: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+  userId: string;
+  noSetFunctions?: boolean;
+  setSearchRadius?: React.Dispatch<React.SetStateAction<number>>;
+  setMinRating?: React.Dispatch<React.SetStateAction<number | null>>;
+  setPriceLevels?: React.Dispatch<React.SetStateAction<string[]>>;
+  setOpenNow?: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
 export interface SearchHistoryData {
