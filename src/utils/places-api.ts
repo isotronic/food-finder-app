@@ -1,4 +1,4 @@
-import { GeoLocation, SearchOptions, SearchPreferences } from "./types";
+import { GeoLocation, PlaceDetailsResult, SearchOptions, SearchPreferences } from "./types";
 
 export async function sendSearchRequest(
   searchQuery: string,
@@ -51,4 +51,22 @@ export async function sendSearchRequest(
 
   const responseData = await response.json();
   return responseData.places;
+}
+
+export async function fetchPlaceDetails(placeId: string): Promise<PlaceDetailsResult> {
+  const endpoint = "https://places.googleapis.com/v1/places/" + placeId;
+
+  const headers = {
+    "Content-Type": "application/json",
+    "X-Goog-Api-Key": import.meta.env.VITE_PLACES_API_KEY,
+    "X-Goog-FieldMask": "photos,googleMapsUri,websiteUri,currentOpeningHours,userRatingCount",
+  };
+
+  const response = await fetch(endpoint, {
+    method: "GET",
+    headers,
+  });
+
+  const responseData = await response.json();
+  return responseData;
 }

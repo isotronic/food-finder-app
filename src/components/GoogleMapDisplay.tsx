@@ -2,6 +2,7 @@ import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps
 import { Container, Typography } from "@mui/material";
 import { GoogleMapDisplayProps, SearchResult } from "../utils/types";
 import { useEffect, useState } from "react";
+import { SingleResultDisplay } from "./SingleResultDisplay";
 
 export default function GoogleMapDisplay({
   latitude,
@@ -27,9 +28,21 @@ export default function GoogleMapDisplay({
   }, [mapReference, searchResult]);
 
   function mapMarkerClickHandler(result: SearchResult) {
-    mapReference?.panTo({ lat: result.location.latitude, lng: result.location.longitude });
-    setInfoWindowOpen(true);
-    setInfoWindowData(result);
+    if (infoWindowOpen) {
+      setInfoWindowOpen(false);
+
+      setTimeout(() => {
+        mapReference?.panTo({ lat: result.location.latitude, lng: result.location.longitude });
+
+        setInfoWindowOpen(true);
+        setInfoWindowData(result);
+      }, 0);
+    } else {
+      mapReference?.panTo({ lat: result.location.latitude, lng: result.location.longitude });
+
+      setInfoWindowOpen(true);
+      setInfoWindowData(result);
+    }
   }
 
   return (
@@ -57,7 +70,7 @@ export default function GoogleMapDisplay({
                       setInfoWindowOpen(false);
                     }}
                   >
-                    <h3>{result.displayName.text}</h3>
+                    <SingleResultDisplay result={result} />
                   </InfoWindow>
                 )}
               </Marker>

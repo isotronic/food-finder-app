@@ -76,3 +76,32 @@ export interface HeaderSEOProps {
   description: string;
   type?: string;
 }
+
+export interface SingleResultDisplayProps {
+  result: SearchResult;
+}
+
+export interface PlaceDetailsResult {
+  currentOpeningHours: {
+    openNow: boolean;
+    periods: {
+      close: {
+        date: { year: number; month: number; day: number };
+        day: number;
+        hour: number;
+        minute: number;
+      };
+      open: {
+        date: { year: number; month: number; day: number };
+        day: number;
+        hour: number;
+        minute: number;
+      };
+    }[];
+    weekdayDescription: string[];
+  };
+  googleMapsUri: string;
+  userRatingCount: number;
+  websiteUri: string;
+  photos: { name: string; heightPx: number; widthPx: number; authorAttributions: [] }[];
+}
