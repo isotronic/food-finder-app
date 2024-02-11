@@ -1,13 +1,12 @@
-# Food Finder App (in developement)
+# Food Finder App
 
 This is a web app that helps users find nearby restaurants based on their preferences and location.
 
 ## Features
 
 - Users can search for restaurants by cuisine, price range, rating, or location
-- Users can view restaurant details, such as address, phone number, website, menu, and reviews.
-- Users can get directions to the restaurant using Google Maps.
-- Users can save their favorite restaurants and view them later.
+- Users can view restaurant details.(in developement)
+- Users can save their favorite restaurants and view them later.(planned)
 
 ## Technologies
 
